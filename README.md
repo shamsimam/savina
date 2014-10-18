@@ -20,13 +20,13 @@ October 2014.
 
 ## Supported actor libraries
 
-* Akka 2.3.2
-* Function-Java 4.1
-* GPars 1.2.1
-* Habanero-Java library 0.1.3 (includes actors and selectors)
-* Jetlang 0.2.12
-* Jumi 0.1.196
-* Lift 2.6-M4
-* Scala 2.11.0
-* Scalaz 7.1.0-M6.
+* <a href="http://akka.io/">Akka</a> 2.3.2
+* <a href="http://code.google.com/p/functionaljava/">Functional-Java</a> 4.1
+* <a href="http://gpars.codehaus.org/">GPars</a> 1.2.1
+* <a href="http://wiki.rice.edu/confluence/display/PARPROG/HJ+Library">Habanero-Java library</a> 0.1.3 (includes actors and selectors)
+* <a href="http://code.google.com/p/jetlang/">Jetlang</a> 0.2.12
+* <a href="http://jumi.fi/actors.html">Jumi</a> 0.1.196
+* <a href="http://liftweb.net/">Lift</a> 2.6-M4
+* <a href="http://docs.scala-lang.org/overviews/core/actors.html">Scala</a> 2.11.0
+* <a href="http://github.com/scalaz/scalaz">Scalaz</a> 7.1.0-M6.
 

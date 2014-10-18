@@ -13,7 +13,10 @@ This will allow other developers and researchers to compare the performance of t
 
 Please refer to the following paper for further details: <br />
 <a href="http://soft.vub.ac.be/AGERE14/papers/ageresplash2014_submission_19.pdf">Savina - An Actor Benchmark Suite</a>.
-<a href="mailto:shams@rice.edu">Shams Imam</a>, Vivek Sarkar. 4th International Workshop on Programming based on Actors, Agents, and Decentralized Control (AGERE! 2014), October 2014.
+<a href="mailto:shams@rice.edu">Shams Imam</a>,
+<a href="mailto:vsarkar@rice.edu">Vivek Sarkar</a>.
+4th International Workshop on Programming based on Actors, Agents, and Decentralized Control (<a href="http://soft.vub.ac.be/AGERE14/">AGERE! 2014</a>),
+October 2014.
 
 ## Supported actor libraries
 

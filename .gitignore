@@ -1,3 +1,6 @@
+.idea/
+selectors-benchmarks.iml
+
 target/
 pom.xml.tag
 pom.xml.releaseBackup

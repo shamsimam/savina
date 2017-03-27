@@ -50,7 +50,7 @@ public final class QuickSortConfig {
     protected static void printArgs() {
         System.out.printf(BenchmarkRunner.argOutputFormat, "N (num values)", N);
         System.out.printf(BenchmarkRunner.argOutputFormat, "M (max value)", M);
-        System.out.printf(BenchmarkRunner.argOutputFormat, "T (sequential cutoff)", S);
+        System.out.printf(BenchmarkRunner.argOutputFormat, "T (sequential cutoff)", T);
         System.out.printf(BenchmarkRunner.argOutputFormat, "S (seed)", S);
         System.out.printf(BenchmarkRunner.argOutputFormat, "debug", debug);
     }

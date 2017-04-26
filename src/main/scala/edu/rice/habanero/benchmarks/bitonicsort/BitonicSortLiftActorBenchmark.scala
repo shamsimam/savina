@@ -1,10 +1,8 @@
 package edu.rice.habanero.benchmarks.bitonicsort
 
-import java.util.Random
-
 import edu.rice.habanero.actors.{LiftActor, LiftActorState, LiftPool}
 import edu.rice.habanero.benchmarks.philosopher.PhilosopherAkkaActorBenchmark.ExitMessage
-import edu.rice.habanero.benchmarks.{Benchmark, BenchmarkRunner}
+import edu.rice.habanero.benchmarks.{Benchmark, BenchmarkRunner, PseudoRandom}
 
 import scala.collection.mutable.ListBuffer
 
@@ -493,7 +491,7 @@ object BitonicSortLiftActorBenchmark {
 
   private class IntSourceActor(numValues: Int, maxValue: Long, seed: Long, nextActor: LiftActor[AnyRef]) extends LiftActor[AnyRef] {
 
-    private val random = new Random(seed)
+    private val random = new PseudoRandom(seed)
     private val sb = new StringBuilder()
 
     override def process(msg: AnyRef) {

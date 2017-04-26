@@ -2,10 +2,9 @@ package edu.rice.habanero.benchmarks.banking
 
 import edu.rice.habanero.actors.{ScalaActor, ScalaActorState}
 import edu.rice.habanero.benchmarks.banking.BankingConfig._
-import edu.rice.habanero.benchmarks.{Benchmark, BenchmarkRunner}
+import edu.rice.habanero.benchmarks.{Benchmark, BenchmarkRunner, PseudoRandom}
 
 import scala.collection.mutable.ListBuffer
-import scala.util.Random
 
 /**
  *
@@ -47,7 +46,7 @@ object BankingScalaManualStashActorBenchmark {
     })
     private var numCompletedBankings = 0
 
-    private val randomGen = new Random(123456)
+    private val randomGen = new PseudoRandom(123456)
 
 
     protected override def onPostStart() {

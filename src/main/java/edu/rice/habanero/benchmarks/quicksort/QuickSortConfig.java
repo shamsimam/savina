@@ -1,10 +1,10 @@
 package edu.rice.habanero.benchmarks.quicksort;
 
 import edu.rice.habanero.benchmarks.BenchmarkRunner;
+import edu.rice.habanero.benchmarks.PseudoRandom;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * @author <a href="http://shams.web.rice.edu/">Shams Imam</a> (shams@rice.edu)
@@ -155,7 +155,7 @@ public final class QuickSortConfig {
 
         final List<Long> result = new ArrayList<>(N);
 
-        final Random random = new Random(S);
+        final PseudoRandom random = new PseudoRandom(S);
         for (int i = 0; i < N; i++) {
             result.add(Math.abs(random.nextLong() % M));
         }

@@ -1,10 +1,8 @@
 package edu.rice.habanero.benchmarks.bitonicsort
 
-import java.util.Random
-
 import edu.rice.habanero.actors.{HabaneroActor, HabaneroSelector}
 import edu.rice.habanero.benchmarks.philosopher.PhilosopherAkkaActorBenchmark.ExitMessage
-import edu.rice.habanero.benchmarks.{Benchmark, BenchmarkRunner}
+import edu.rice.habanero.benchmarks.{Benchmark, BenchmarkRunner, PseudoRandom}
 import edu.rice.hj.Module0._
 import edu.rice.hj.api.HjSuspendable
 
@@ -487,7 +485,7 @@ object BitonicSortHabaneroSelectorBenchmark {
 
   private class IntSourceActor(numValues: Int, maxValue: Long, seed: Long, nextActor: HabaneroActor[AnyRef]) extends HabaneroActor[AnyRef] {
 
-    private val random = new Random(seed)
+    private val random = new PseudoRandom(seed)
     private val sb = new StringBuilder()
 
     override def process(msg: AnyRef) {

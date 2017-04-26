@@ -1,11 +1,9 @@
 package edu.rice.habanero.benchmarks.concsll
 
-import java.util.Random
-
 import akka.actor.{ActorRef, Props}
 import edu.rice.habanero.actors.{AkkaActor, AkkaActorState}
 import edu.rice.habanero.benchmarks.concsll.SortedListConfig.{DoWorkMessage, EndWorkMessage}
-import edu.rice.habanero.benchmarks.{Benchmark, BenchmarkRunner}
+import edu.rice.habanero.benchmarks.{Benchmark, BenchmarkRunner, PseudoRandom}
 
 /**
  *
@@ -75,7 +73,7 @@ object SortedListAkkaActorBenchmark {
     private final val writePercent = SortedListConfig.WRITE_PERCENTAGE
     private final val sizePercent = SortedListConfig.SIZE_PERCENTAGE
     private var messageCount: Int = 0
-    private final val random = new Random(id + numMessagesPerWorker + writePercent + sizePercent)
+    private final val random = new PseudoRandom(id + numMessagesPerWorker + writePercent + sizePercent)
 
     override def process(msg: AnyRef) {
       messageCount += 1

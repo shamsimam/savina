@@ -1,10 +1,8 @@
 package edu.rice.habanero.benchmarks.cigsmok
 
-import java.util.Random
-
 import edu.rice.habanero.actors.HabaneroActor
 import edu.rice.habanero.benchmarks.cigsmok.CigaretteSmokerConfig.{ExitMessage, StartMessage, StartSmoking, StartedSmoking}
-import edu.rice.habanero.benchmarks.{Benchmark, BenchmarkRunner}
+import edu.rice.habanero.benchmarks.{Benchmark, BenchmarkRunner, PseudoRandom}
 import edu.rice.hj.Module0._
 import edu.rice.hj.api.HjSuspendable
 
@@ -48,7 +46,7 @@ object CigaretteSmokerHabaneroActorBenchmark {
 
     private val self = this
     private val smokerActors = Array.tabulate[HabaneroActor[AnyRef]](numSmokers)(i => new SmokerActor(self))
-    private val random = new Random(numRounds * numSmokers)
+    private val random = new PseudoRandom(numRounds * numSmokers)
     private var roundsSoFar = 0
 
     override def onPostStart() {

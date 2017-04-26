@@ -1,12 +1,11 @@
 package edu.rice.habanero.benchmarks.barber
 
-import java.util.Random
 import java.util.concurrent.atomic.AtomicLong
 
 import akka.actor.{ActorRef, Props}
 import edu.rice.habanero.actors.{AkkaActor, AkkaActorState}
 import edu.rice.habanero.benchmarks.barber.SleepingBarberConfig._
-import edu.rice.habanero.benchmarks.{Benchmark, BenchmarkRunner}
+import edu.rice.habanero.benchmarks.{Benchmark, BenchmarkRunner, PseudoRandom}
 
 import scala.collection.mutable.ListBuffer
 
@@ -114,7 +113,7 @@ object SleepingBarberAkkaActorBenchmark {
 
   private class BarberActor extends AkkaActor[AnyRef] {
 
-    private val random = new Random()
+    private val random = new PseudoRandom()
 
     override def process(msg: AnyRef) {
       msg match {
@@ -143,7 +142,7 @@ object SleepingBarberAkkaActorBenchmark {
 
   private class CustomerFactoryActor(idGenerator: AtomicLong, haircuts: Int, room: ActorRef) extends AkkaActor[AnyRef] {
 
-    private val random = new Random()
+    private val random = new PseudoRandom()
     private var numHairCutsSoFar = 0
 
     override def process(msg: AnyRef) {

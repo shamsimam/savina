@@ -1,6 +1,7 @@
 package edu.rice.habanero.benchmarks.threadring;
 
 import edu.rice.habanero.benchmarks.BenchmarkRunner;
+import edu.rice.habanero.benchmarks.CliArgumentParser;
 
 /**
  * @author <a href="http://shams.web.rice.edu/">Shams Imam</a> (shams@rice.edu)
@@ -12,20 +13,10 @@ public final class ThreadRingConfig {
     protected static boolean debug = false;
 
     protected static void parseArgs(final String[] args) {
-        int i = 0;
-        while (i < args.length) {
-            final String loopOptionKey = args[i];
-            if ("-n".equals(loopOptionKey)) {
-                i += 1;
-                N = Integer.parseInt(args[i]);
-            } else if ("-r".equals(loopOptionKey)) {
-                i += 1;
-                R = Integer.parseInt(args[i]);
-            } else if ("-debug".equals(loopOptionKey) || "-verbose".equals(loopOptionKey)) {
-                debug = true;
-            }
-            i += 1;
-        }
+        CliArgumentParser ap = new CliArgumentParser(args);
+        N = ap.getIntValue(new String[] {"-n"}, N);
+        R = ap.getIntValue(new String[] {"-r"}, R);
+        debug = ap.getBoolValue(new String[] {"--debug", "--verbose"}, debug);
     }
 
     protected static void printArgs() {

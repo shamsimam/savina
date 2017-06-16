@@ -1,6 +1,7 @@
 package edu.rice.habanero.benchmarks.uct;
 
 import edu.rice.habanero.benchmarks.BenchmarkRunner;
+import edu.rice.habanero.benchmarks.CliArgumentParser;
 
 /**
  * Unbalanced Cobwebbed Tree benchmark.
@@ -17,39 +18,13 @@ public final class UctConfig {
     protected static boolean debug = false;
 
     protected static void parseArgs(final String[] args) {
-        int i = 0;
-        while (i < args.length) {
-            final String loopOptionKey = args[i];
-
-            switch (loopOptionKey) {
-                case "-nodes":
-                    i += 1;
-                    MAX_NODES = Integer.parseInt(args[i]);
-                    break;
-                case "-avg":
-                    i += 1;
-                    AVG_COMP_SIZE = Integer.parseInt(args[i]);
-                    break;
-                case "-stdev":
-                    i += 1;
-                    STDEV_COMP_SIZE = Integer.parseInt(args[i]);
-                    break;
-                case "-binomial":
-                    i += 1;
-                    BINOMIAL_PARAM = Integer.parseInt(args[i]);
-                    break;
-                case "-urgent":
-                    i += 1;
-                    URGENT_NODE_PERCENT = Integer.parseInt(args[i]);
-                    break;
-                case "-debug":
-                case "-verbose":
-                    debug = true;
-                    break;
-            }
-
-            i += 1;
-        }
+        CliArgumentParser ap = new CliArgumentParser(args);
+        MAX_NODES = ap.getIntValue(new String[]{"-n", "-nodes"}, MAX_NODES);
+        AVG_COMP_SIZE = ap.getIntValue(new String[]{"-a", "-avg"}, AVG_COMP_SIZE);
+        STDEV_COMP_SIZE = ap.getIntValue(new String[]{"-s", "-stdev"}, STDEV_COMP_SIZE);
+        BINOMIAL_PARAM = ap.getIntValue(new String[]{"-b", "-binomial"}, BINOMIAL_PARAM);
+        URGENT_NODE_PERCENT = ap.getIntValue(new String[]{"-u", "-urgent"}, URGENT_NODE_PERCENT);
+        debug = ap.getBoolValue(new String[]{"--debug", "--verbose"}, debug);
     }
 
     protected static void printArgs() {
@@ -63,7 +38,6 @@ public final class UctConfig {
 
     protected static int loop(int busywait, int dummy) {
         int test = 0;
-        long current = System.currentTimeMillis();
 
         for (int k = 0; k < dummy * busywait; k++) {
             test++;

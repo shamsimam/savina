@@ -1,6 +1,7 @@
 package edu.rice.habanero.benchmarks.quicksort;
 
 import edu.rice.habanero.benchmarks.BenchmarkRunner;
+import edu.rice.habanero.benchmarks.CliArgumentParser;
 import edu.rice.habanero.benchmarks.PseudoRandom;
 
 import java.util.ArrayList;
@@ -18,33 +19,12 @@ public final class QuickSortConfig {
     protected static boolean debug = false;
 
     protected static void parseArgs(final String[] args) {
-        int i = 0;
-        while (i < args.length) {
-            final String loopOptionKey = args[i];
-            switch (loopOptionKey) {
-                case "-n":
-                    i += 1;
-                    N = Integer.parseInt(args[i]);
-                    break;
-                case "-m":
-                    i += 1;
-                    M = Long.parseLong(args[i]);
-                    break;
-                case "-t":
-                    i += 1;
-                    T = Long.parseLong(args[i]);
-                    break;
-                case "-s":
-                    i += 1;
-                    S = Long.parseLong(args[i]);
-                    break;
-                case "-debug":
-                case "-verbose":
-                    debug = true;
-                    break;
-            }
-            i += 1;
-        }
+        CliArgumentParser ap = new CliArgumentParser(args);
+        N = ap.getIntValue(new String[] {"-n"}, N);
+        M = ap.getLongValue(new String[] {"-m"}, M);
+        T = ap.getLongValue(new String[] {"-t"}, T);
+        S = ap.getLongValue(new String[] {"-s"}, S);
+        debug = ap.getBoolValue(new String[] {"--debug", "--verbose"}, debug);
     }
 
     protected static void printArgs() {

@@ -1,5 +1,6 @@
 package edu.rice.habanero.benchmarks;
 
+import edu.rice.habanero.benchmarks.CliArgumentParser;
 import edu.rice.habanero.actors.AkkaActorState;
 import edu.rice.hj.runtime.config.HjSystemProperty;
 
@@ -16,6 +17,7 @@ public class BenchmarkRunner {
     protected static final double tolerance = 0.20;
 
     protected static int iterations = 12;
+    protected static boolean simpleExecutionRequested = false;
 
     private static void parseArgs(final String[] args) throws Exception {
 
@@ -25,15 +27,9 @@ public class BenchmarkRunner {
             System.setProperty("actors.maxPoolSize", numWorkers);
         }
 
-        final int argLimit = args.length - 1;
-        for (int i = 0; i < argLimit; i++) {
-            final String argName = args[i];
-            final String argValue = args[i + 1];
-
-            if (argName.equalsIgnoreCase("-iter")) {
-                iterations = Integer.parseInt(argValue);
-            }
-        }
+        CliArgumentParser argParser = new CliArgumentParser(args);
+        iterations = argParser.getIntValue(new String[]{"-iter", "--iterations"}, iterations);
+        simpleExecutionRequested = argParser.getBoolValue(new String[]{"--simple"}, simpleExecutionRequested);
     }
 
     public static void runBenchmark(final String[] args, final Benchmark benchmark) {
@@ -45,13 +41,17 @@ public class BenchmarkRunner {
             System.exit(1);
         }
 
-        final String benchmarkName = benchmark.name();
-        if (benchmarkName.contains("Akka")) {
+        if (benchmark.name().contains("Akka")) {
             AkkaActorState.initialize();
         }
 
+        if (simpleExecutionRequested) {
+            benchmark.runIteration();
+            return;
+        }
+
         System.out.println("Runtime: " + benchmark.runtimeInfo());
-        System.out.println("Benchmark: " + benchmarkName);
+        System.out.println("Benchmark: " + benchmark.name());
         System.out.println("Args: ");
         benchmark.printArgInfo();
         System.out.println();

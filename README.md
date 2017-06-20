@@ -29,4 +29,35 @@ October 2014.
 * <a href="http://liftweb.net/">Lift</a> 2.6-M4
 * <a href="http://docs.scala-lang.org/overviews/core/actors.html">Scala</a> 2.11.0
 * <a href="http://github.com/scalaz/scalaz">Scalaz</a> 7.1.0-M6.
+* <a href="https://github.com/actor-framework/actor-framework">CAF</a> 0.15.3
 
+## Requirements
+  * Optional
+    * Java + Scala + Maven
+    * [CAF]()
+
+## Compile Benchmarks
+* Java/Scala benchmarks
+        
+        cd savina
+        mvn compile
+        mvn package
+
+* CAF benchmarks
+        
+        cd savina
+        mkdir build
+        cd build
+        cmake [-DCAF_ROOT_DIR=/path/to/caf/build/directory] ..
+        make
+
+## Run Benchmarks
+* Java/Scala
+
+        cd savina/target
+        java -cp savina-0.0.1-SNAPSHOT-jar-with-dependencies.jar edu/rice/habanero/benchmarks/pingpong/PingPongAkkaActorBenchmark [--iterations=X] [--no_evaluation] -- [benchmark specific options]
+
+* CAF
+
+        cd build/bin
+        ./caf_01_pingpong [--iterations=X] [--no_evaluation] -- [benchmark specific options]

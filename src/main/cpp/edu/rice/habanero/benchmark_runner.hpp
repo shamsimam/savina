@@ -29,11 +29,8 @@ public:
     using namespace std;
     parse_args(argc, argv);
     benchmark.initialize(cfg_.args_remainder);
-    if (cfg_.no_evaluation) {
-      for (int i = 0; i < cfg_.iterations; i++) {
-        benchmark.run_iteration();
-        benchmark.cleanup_iteration(i + 1 == cfg_.iterations, 0);
-      }
+    if (cfg_.simple_exectuion_request) {
+      benchmark.run_iteration();
       return;
     }
     cout << "Runtime: " + benchmark.runtime_info() << endl;
@@ -213,12 +210,12 @@ private:
   struct config : public caf::actor_system_config {
   public:
     int iterations = 12;
-    bool no_evaluation = false;
+    bool simple_exectuion_request = false;
 
     config() {
       opt_group{custom_options_, "global"}
       .add(iterations, "iterations", "benchmark iterations")
-      .add(no_evaluation, "no_evaluation", "no evaluation of consumed time");
+      .add(simple_exectuion_request, "simple", "simple, single exectuion of an benchmark");
     }
   };
 

@@ -1,11 +1,10 @@
 package edu.rice.habanero.benchmarks.barber
 
-import java.util.Random
 import java.util.concurrent.atomic.AtomicLong
 
 import edu.rice.habanero.actors.{JumiActor, JumiActorState, JumiPool}
 import edu.rice.habanero.benchmarks.barber.SleepingBarberConfig._
-import edu.rice.habanero.benchmarks.{Benchmark, BenchmarkRunner}
+import edu.rice.habanero.benchmarks.{Benchmark, BenchmarkRunner, PseudoRandom}
 
 import scala.collection.mutable.ListBuffer
 
@@ -115,7 +114,7 @@ object SleepingBarberJumiActorBenchmark {
 
   private class BarberActor extends JumiActor[AnyRef] {
 
-    private val random = new Random()
+    private val random = new PseudoRandom()
 
     override def process(msg: AnyRef) {
       msg match {
@@ -145,7 +144,7 @@ object SleepingBarberJumiActorBenchmark {
   private class CustomerFactoryActor(idGenerator: AtomicLong, haircuts: Int, room: WaitingRoomActor) extends JumiActor[AnyRef] {
 
     private val self = this
-    private val random = new Random()
+    private val random = new PseudoRandom()
     private var numHairCutsSoFar = 0
 
     override def process(msg: AnyRef) {

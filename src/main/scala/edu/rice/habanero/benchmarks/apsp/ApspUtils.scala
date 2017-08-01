@@ -1,6 +1,6 @@
 package edu.rice.habanero.benchmarks.apsp
 
-import java.util.Random
+import edu.rice.habanero.benchmarks.PseudoRandom
 
 /**
  * @author <a href="http://shams.web.rice.edu/">Shams Imam</a> (shams@rice.edu)
@@ -14,7 +14,7 @@ object ApspUtils {
     val N = ApspConfig.N
     val W = ApspConfig.W
 
-    val random = new Random(N)
+    val random = new PseudoRandom(N)
     val localData = Array.tabulate[Long](N, N)((i, j) => 0)
 
     for (i <- 0 until N) {

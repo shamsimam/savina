@@ -1,10 +1,8 @@
 package edu.rice.habanero.benchmarks.cigsmok
 
-import java.util.Random
-
 import edu.rice.habanero.actors.{ScalaActor, ScalaActorState}
 import edu.rice.habanero.benchmarks.cigsmok.CigaretteSmokerConfig.{ExitMessage, StartMessage, StartSmoking, StartedSmoking}
-import edu.rice.habanero.benchmarks.{Benchmark, BenchmarkRunner}
+import edu.rice.habanero.benchmarks.{Benchmark, BenchmarkRunner, PseudoRandom}
 
 /**
  * Based on solution in <a href="http://en.wikipedia.org/wiki/Cigarette_smokers_problem">Wikipedia</a> where resources are acquired instantaneously.
@@ -44,7 +42,7 @@ object CigaretteSmokerScalaActorBenchmark {
 
     private val self = this
     private val smokerActors = Array.tabulate[ScalaActor[AnyRef]](numSmokers)(i => new SmokerActor(self))
-    private val random = new Random(numRounds * numSmokers)
+    private val random = new PseudoRandom(numRounds * numSmokers)
     private var roundsSoFar = 0
 
     override def onPostStart() {

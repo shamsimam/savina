@@ -1,8 +1,7 @@
 package edu.rice.habanero.benchmarks.bndbuffer;
 
 import edu.rice.habanero.benchmarks.BenchmarkRunner;
-
-import java.util.Random;
+import edu.rice.habanero.benchmarks.PseudoRandom;
 
 /**
  * Computes Logistic Map source: http://en.wikipedia.org/wiki/Logistic_map
@@ -80,7 +79,7 @@ public final class ProdConsBoundedBufferConfig {
     protected static double processItem(final double curTerm, final int cost) {
         double res = curTerm;
 
-        final Random random = new Random(cost);
+        final PseudoRandom random = new PseudoRandom(cost);
         if (cost > 0) {
             for (int i = 0; i < cost; i++) {
                 for (int j = 0; j < 100; j++) {

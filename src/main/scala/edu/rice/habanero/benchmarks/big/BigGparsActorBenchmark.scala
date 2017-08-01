@@ -1,10 +1,8 @@
 package edu.rice.habanero.benchmarks.big
 
-import java.util.Random
-
 import edu.rice.habanero.actors.{GparsActor, GparsActorState, GparsPool}
 import edu.rice.habanero.benchmarks.big.BigConfig.{ExitMessage, Message, PingMessage, PongMessage}
-import edu.rice.habanero.benchmarks.{Benchmark, BenchmarkRunner}
+import edu.rice.habanero.benchmarks.{Benchmark, BenchmarkRunner, PseudoRandom}
 
 /**
  * @author <a href="http://shams.web.rice.edu/">Shams Imam</a> (shams@rice.edu)
@@ -61,7 +59,7 @@ object BigGparsActorBenchmark {
 
     private var numPings = 0
     private var expPinger = -1
-    private val random = new Random(id)
+    private val random = new PseudoRandom(id)
     private var neighbors: Array[GparsActor[AnyRef]] = null
 
     private val myPingMessage = new PingMessage(id)

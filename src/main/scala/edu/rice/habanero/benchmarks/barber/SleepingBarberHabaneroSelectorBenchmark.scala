@@ -1,11 +1,10 @@
 package edu.rice.habanero.benchmarks.barber
 
-import java.util.Random
 import java.util.concurrent.atomic.AtomicLong
 
 import edu.rice.habanero.actors.HabaneroSelector
 import edu.rice.habanero.benchmarks.barber.SleepingBarberConfig._
-import edu.rice.habanero.benchmarks.{Benchmark, BenchmarkRunner}
+import edu.rice.habanero.benchmarks.{Benchmark, BenchmarkRunner, PseudoRandom}
 import edu.rice.hj.Module0._
 import edu.rice.hj.api.HjSuspendable
 
@@ -117,7 +116,7 @@ object SleepingBarberHabaneroSelectorBenchmark {
 
   private class BarberSelector extends HabaneroSelector[AnyRef](1) {
 
-    private val random = new Random()
+    private val random = new PseudoRandom()
 
     override def process(msg: AnyRef) {
       msg match {
@@ -147,7 +146,7 @@ object SleepingBarberHabaneroSelectorBenchmark {
   private class CustomerFactorySelector(idGenerator: AtomicLong, haircuts: Int, room: WaitingRoomSelector) extends HabaneroSelector[AnyRef](1) {
 
     private val self = this
-    private val random = new Random()
+    private val random = new PseudoRandom()
     private var numHairCutsSoFar = 0
 
     override def process(msg: AnyRef) {

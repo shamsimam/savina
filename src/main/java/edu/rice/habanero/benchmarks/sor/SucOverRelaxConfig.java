@@ -1,8 +1,7 @@
 package edu.rice.habanero.benchmarks.sor;
 
 import edu.rice.habanero.benchmarks.BenchmarkRunner;
-
-import java.util.Random;
+import edu.rice.habanero.benchmarks.PseudoRandom;
 
 /**
  * @author <a href="http://shams.web.rice.edu/">Shams Imam</a> (shams@rice.edu)
@@ -62,7 +61,7 @@ public final class SucOverRelaxConfig {
         }
     }
 
-    protected static Random R = null;
+    protected static PseudoRandom R = null;
     protected static double[][] A = null;
 
     protected static void initialize() {
@@ -71,8 +70,8 @@ public final class SucOverRelaxConfig {
         A = randomMatrix(dataSize, dataSize);
     }
 
-    protected static Random resetRandomGenerator() {
-        return new Random(RANDOM_SEED);
+    protected static PseudoRandom resetRandomGenerator() {
+        return new PseudoRandom(RANDOM_SEED);
     }
 
     protected static double[][] randomMatrix(final int M, final int N) {

@@ -1,10 +1,8 @@
 package edu.rice.habanero.benchmarks.concsll
 
-import java.util.Random
-
 import edu.rice.habanero.actors.HabaneroActor
 import edu.rice.habanero.benchmarks.concsll.SortedListConfig.{DoWorkMessage, EndWorkMessage}
-import edu.rice.habanero.benchmarks.{Benchmark, BenchmarkRunner}
+import edu.rice.habanero.benchmarks.{Benchmark, BenchmarkRunner, PseudoRandom}
 import edu.rice.hj.experimental.actors.{ReaderWriterActor, ReaderWriterPolicy}
 
 /**
@@ -60,7 +58,7 @@ object SortedListHabaneroRWAbstractBenchmark {
     private final val writePercent = SortedListConfig.WRITE_PERCENTAGE
     private final val sizePercent = SortedListConfig.SIZE_PERCENTAGE
     private var messageCount: Int = 0
-    private final val random = new Random(id + numMessagesPerWorker + writePercent + sizePercent)
+    private final val random = new PseudoRandom(id + numMessagesPerWorker + writePercent + sizePercent)
 
     override def process(msg: AnyRef) {
       messageCount += 1

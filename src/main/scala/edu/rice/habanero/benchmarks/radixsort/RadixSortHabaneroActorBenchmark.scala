@@ -1,9 +1,7 @@
 package edu.rice.habanero.benchmarks.radixsort
 
-import java.util.Random
-
 import edu.rice.habanero.actors.HabaneroActor
-import edu.rice.habanero.benchmarks.{Benchmark, BenchmarkRunner}
+import edu.rice.habanero.benchmarks.{Benchmark, BenchmarkRunner, PseudoRandom}
 import edu.rice.hj.Module0._
 import edu.rice.hj.api.HjSuspendable
 
@@ -61,7 +59,7 @@ object RadixSortHabaneroActorBenchmark {
 
   private class IntSourceActor(numValues: Int, maxValue: Long, seed: Long) extends HabaneroActor[AnyRef] {
 
-    val random = new Random(seed)
+    val random = new PseudoRandom(seed)
 
     override def process(msg: AnyRef) {
 

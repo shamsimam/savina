@@ -1,6 +1,7 @@
 package edu.rice.habanero.benchmarks.sieve;
 
 import edu.rice.habanero.benchmarks.BenchmarkRunner;
+import edu.rice.habanero.benchmarks.CliArgumentParser;
 
 /**
  * @author <a href="http://shams.web.rice.edu/">Shams Imam</a> (shams@rice.edu)
@@ -12,25 +13,10 @@ public final class SieveConfig {
     protected static boolean debug = false;
 
     protected static void parseArgs(final String[] args) {
-        int i = 0;
-        while (i < args.length) {
-            final String loopOptionKey = args[i];
-            switch (loopOptionKey) {
-                case "-n":
-                    i += 1;
-                    N = Long.parseLong(args[i]);
-                    break;
-                case "-m":
-                    i += 1;
-                    M = Integer.parseInt(args[i]);
-                    break;
-                case "-debug":
-                case "-verbose":
-                    debug = true;
-                    break;
-            }
-            i += 1;
-        }
+        CliArgumentParser ap = new CliArgumentParser(args);
+        N = ap.getLongValue(new String[] {"-n"}, N);
+        M = ap.getIntValue(new String[] {"-m"}, M);
+        debug = ap.getBoolValue(new String[] {"--debug", "--verbose"}, debug);
     }
 
     protected static void printArgs() {

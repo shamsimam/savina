@@ -1,6 +1,7 @@
 package edu.rice.habanero.benchmarks.nqueenk;
 
 import edu.rice.habanero.benchmarks.BenchmarkRunner;
+import edu.rice.habanero.benchmarks.CliArgumentParser;
 
 /**
  * @author <a href="http://shams.web.rice.edu/">Shams Imam</a> (shams@rice.edu)
@@ -39,39 +40,23 @@ public final class NQueensConfig {
     protected static boolean debug = false;
 
     protected static void parseArgs(final String[] args) {
-        int i = 0;
-        while (i < args.length) {
-            final String loopOptionKey = args[i];
-            switch (loopOptionKey) {
-                case "-n":
-                    i += 1;
-                    SIZE = Math.max(1, Math.min(Integer.parseInt(args[i]), MAX_SOLUTIONS));
-                    break;
-                case "-t":
-                    i += 1;
-                    THRESHOLD = Math.max(1, Math.min(Integer.parseInt(args[i]), MAX_SOLUTIONS));
-                    break;
-                case "-w":
-                    i += 1;
-                    NUM_WORKERS = Integer.parseInt(args[i]);
-                    break;
-                case "-s":
-                    i += 1;
-                    SOLUTIONS_LIMIT = Integer.parseInt(args[i]);
-                    break;
-                case "-p":
-                    i += 1;
-                    final int priority = Integer.parseInt(args[i]);
-                    final int maxPriority = MessagePriority.values().length - 1;
-                    PRIORITIES = Math.max(1, Math.min(priority, maxPriority));
-                    break;
-                case "-debug":
-                case "-verbose":
-                    debug = true;
-                    break;
-            }
-            i += 1;
+        CliArgumentParser ap = new CliArgumentParser(args);
+        {
+            final int userInput = ap.getIntValue(new String[] {"-n"}, SIZE);
+            SIZE = Math.max(1, Math.min(userInput, MAX_SOLUTIONS));
         }
+        {
+            final int userInput = ap.getIntValue(new String[] {"-t"}, THRESHOLD);
+            THRESHOLD = Math.max(1, Math.min(userInput, MAX_SOLUTIONS));
+        }
+        NUM_WORKERS = ap.getIntValue(new String[] {"-w"}, NUM_WORKERS);
+        SOLUTIONS_LIMIT = ap.getIntValue(new String[] {"-s"}, SOLUTIONS_LIMIT);
+        {
+            final int priority = ap.getIntValue(new String[] {"-p"}, PRIORITIES);
+            final int maxPriority = MessagePriority.values().length - 1;
+            PRIORITIES = Math.max(1, Math.min(priority, maxPriority));
+        }
+        debug = ap.getBoolValue(new String[] {"--debug", "--verbose"}, debug);
     }
 
     protected static void printArgs() {

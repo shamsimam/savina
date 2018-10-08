@@ -1,6 +1,7 @@
 package edu.rice.habanero.benchmarks.filterbank;
 
 import edu.rice.habanero.benchmarks.BenchmarkRunner;
+import edu.rice.habanero.benchmarks.CliArgumentParser;
 
 import java.util.Collection;
 
@@ -20,39 +21,20 @@ public final class FilterBankConfig {
     protected static double[][] F = null;
 
     protected static void parseArgs(final String[] args) {
-        int i = 0;
-        while (i < args.length) {
-            final String loopOptionKey = args[i];
-            switch (loopOptionKey) {
-                case "-sim":
-                case "-simulation":
-                    i += 1;
-                    NUM_SIMULATIONS = Integer.parseInt(args[i]);
-                    break;
-                case "-col":
-                case "-columns":
-                    i += 1;
-                    NUM_COLUMNS = Integer.parseInt(args[i]);
-                    break;
-                case "-chan":
-                case "-channels":
-                    i += 1;
-                    final int argInt = Integer.parseInt(args[i]);
-                    final int maxChannels = MessageChannel.values().length - 1;
-                    NUM_CHANNELS = Math.max(2, Math.min(argInt, maxChannels));
-                    break;
-                case "-debug":
-                case "-verbose":
-                    debug = true;
-                    break;
-            }
-            i += 1;
+        CliArgumentParser ap = new CliArgumentParser(args);
+        NUM_SIMULATIONS = ap.getIntValue(new String[]{"-s", "-sim", "-simulation"}, NUM_SIMULATIONS);
+        NUM_COLUMNS = ap.getIntValue(new String[]{"-c", "-col", "-columns"}, NUM_COLUMNS);
+        {
+            final int argInt = ap.getIntValue(new String[]{"-a", "-chan", "-channels"}, NUM_CHANNELS);
+            final int maxChannels = MessageChannel.values().length - 1;
+            NUM_CHANNELS = Math.max(2, Math.min(argInt, maxChannels));
         }
+        debug = ap.getBoolValue(new String[] {"--debug", "--verbose"}, debug);
 
         H = new double[NUM_CHANNELS][NUM_COLUMNS];
         F = new double[NUM_CHANNELS][NUM_COLUMNS];
         for (int j = 0; j < NUM_CHANNELS; j++) {
-            for (i = 0; i < NUM_COLUMNS; i++) {
+            for (int i = 0; i < NUM_COLUMNS; i++) {
                 H[j][i] = (1.0 * i * NUM_COLUMNS) + (1.0 * j * NUM_CHANNELS) + j + i + j + 1;
                 F[j][i] = (1.0 * i * j) + (1.0 * j * j) + j + i;
             }

@@ -1,6 +1,7 @@
 package edu.rice.habanero.benchmarks.concsll;
 
 import edu.rice.habanero.benchmarks.BenchmarkRunner;
+import edu.rice.habanero.benchmarks.CliArgumentParser;
 
 /**
  * @author <a href="http://shams.web.rice.edu/">Shams Imam</a> (shams@rice.edu)
@@ -15,33 +16,12 @@ public final class SortedListConfig {
     protected static boolean debug = false;
 
     protected static void parseArgs(final String[] args) {
-        int i = 0;
-        while (i < args.length) {
-            final String loopOptionKey = args[i];
-            switch (loopOptionKey) {
-                case "-e":
-                    i += 1;
-                    NUM_ENTITIES = Integer.parseInt(args[i]);
-                    break;
-                case "-m":
-                    i += 1;
-                    NUM_MSGS_PER_WORKER = Integer.parseInt(args[i]);
-                    break;
-                case "-w":
-                    i += 1;
-                    WRITE_PERCENTAGE = Integer.parseInt(args[i]);
-                    break;
-                case "-s":
-                    i += 1;
-                    SIZE_PERCENTAGE = Integer.parseInt(args[i]);
-                    break;
-                case "debug":
-                case "verbose":
-                    debug = true;
-                    break;
-            }
-            i += 1;
-        }
+        CliArgumentParser ap = new CliArgumentParser(args);
+        NUM_ENTITIES = ap.getIntValue(new String[] {"-e"}, NUM_ENTITIES);
+        NUM_MSGS_PER_WORKER = ap.getIntValue(new String[] {"-m"}, NUM_MSGS_PER_WORKER);
+        WRITE_PERCENTAGE = ap.getIntValue(new String[] {"-w"}, WRITE_PERCENTAGE);
+        SIZE_PERCENTAGE = ap.getIntValue(new String[] {"-s"}, SIZE_PERCENTAGE);
+        debug = ap.getBoolValue(new String[] {"--debug", "--verbose"}, debug);
 
         if (WRITE_PERCENTAGE >= 50) {
             throw new IllegalArgumentException("Write rate must be less than 50!");

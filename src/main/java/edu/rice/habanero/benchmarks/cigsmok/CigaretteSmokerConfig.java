@@ -1,6 +1,7 @@
 package edu.rice.habanero.benchmarks.cigsmok;
 
 import edu.rice.habanero.benchmarks.BenchmarkRunner;
+import edu.rice.habanero.benchmarks.CliArgumentParser;
 
 /**
  * @author <a href="http://shams.web.rice.edu/">Shams Imam</a> (shams@rice.edu)
@@ -12,20 +13,10 @@ public final class CigaretteSmokerConfig {
     protected static boolean debug = false;
 
     protected static void parseArgs(final String[] args) {
-        int i = 0;
-        while (i < args.length) {
-            final String loopOptionKey = args[i];
-            if ("-r".equals(loopOptionKey)) {
-                i += 1;
-                R = Integer.parseInt(args[i]);
-            } else if ("-s".equals(loopOptionKey)) {
-                i += 1;
-                S = Integer.parseInt(args[i]);
-            } else if ("-debug".equals(loopOptionKey) || "-verbose".equals(loopOptionKey)) {
-                debug = true;
-            }
-            i += 1;
-        }
+        CliArgumentParser ap = new CliArgumentParser(args);
+        R = ap.getIntValue(new String[] {"-r"}, R);
+        S = ap.getIntValue(new String[] {"-s"}, S);
+        debug = ap.getBoolValue(new String[] {"--debug", "--verbose"}, debug);
     }
 
     protected static void printArgs() {

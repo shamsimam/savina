@@ -1,6 +1,7 @@
 package edu.rice.habanero.benchmarks.piprecision;
 
 import edu.rice.habanero.benchmarks.BenchmarkRunner;
+import edu.rice.habanero.benchmarks.CliArgumentParser;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -19,25 +20,10 @@ public final class PiPrecisionConfig {
     protected static boolean debug = false;
 
     protected static void parseArgs(final String[] args) {
-        int i = 0;
-        while (i < args.length) {
-            final String loopOptionKey = args[i];
-            switch (loopOptionKey) {
-                case "-w":
-                    i += 1;
-                    NUM_WORKERS = Integer.parseInt(args[i]);
-                    break;
-                case "-p":
-                    i += 1;
-                    PRECISION = Integer.parseInt(args[i]);
-                    break;
-                case "debug":
-                case "verbose":
-                    debug = true;
-                    break;
-            }
-            i += 1;
-        }
+        CliArgumentParser ap = new CliArgumentParser(args);
+        NUM_WORKERS = ap.getIntValue(new String[] {"-w"}, NUM_WORKERS);
+        PRECISION = ap.getIntValue(new String[] {"-p"}, PRECISION);
+        debug = ap.getBoolValue(new String[] {"--debug", "--verbose"}, debug);
     }
 
     protected static void printArgs() {

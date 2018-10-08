@@ -1,6 +1,7 @@
 package edu.rice.habanero.benchmarks.sor;
 
 import edu.rice.habanero.benchmarks.BenchmarkRunner;
+import edu.rice.habanero.benchmarks.CliArgumentParser;
 import edu.rice.habanero.benchmarks.PseudoRandom;
 
 /**
@@ -29,21 +30,9 @@ public final class SucOverRelaxConfig {
     protected static boolean debug = false;
 
     protected static void parseArgs(final String[] args) {
-        int i = 0;
-        while (i < args.length) {
-            final String loopOptionKey = args[i];
-            switch (loopOptionKey) {
-                case "-n":
-                    i += 1;
-                    N = Integer.parseInt(args[i]);
-                    break;
-                case "-debug":
-                case "-verbose":
-                    debug = true;
-                    break;
-            }
-            i += 1;
-        }
+        CliArgumentParser ap = new CliArgumentParser(args);
+        N = ap.getIntValue(new String[] {"-n"}, N);
+        debug = ap.getBoolValue(new String[] {"--debug", "--verbose"}, debug);
     }
 
     protected static void printArgs() {

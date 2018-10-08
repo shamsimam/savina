@@ -1,6 +1,7 @@
 package edu.rice.habanero.benchmarks.bndbuffer;
 
 import edu.rice.habanero.benchmarks.BenchmarkRunner;
+import edu.rice.habanero.benchmarks.CliArgumentParser;
 import edu.rice.habanero.benchmarks.PseudoRandom;
 
 /**
@@ -20,49 +21,15 @@ public final class ProdConsBoundedBufferConfig {
     protected static boolean debug = false;
 
     protected static void parseArgs(final String[] args) {
-        int i = 0;
-        while (i < args.length) {
-            final String loopOptionKey = args[i];
-
-            switch (loopOptionKey) {
-                case "-bb":
-                    i += 1;
-                    bufferSize = Integer.parseInt(args[i]);
-                    break;
-                case "-np":
-                    i += 1;
-                    numProducers = Integer.parseInt(args[i]);
-                    break;
-                case "-nc":
-                    i += 1;
-                    numConsumers = Integer.parseInt(args[i]);
-                    break;
-                case "-pc":
-                    i += 1;
-                    prodCost = Integer.parseInt(args[i]);
-                    break;
-                case "-cc":
-                    i += 1;
-                    consCost = Integer.parseInt(args[i]);
-                    break;
-                case "-ipp":
-                    i += 1;
-                    numItemsPerProducer = Integer.parseInt(args[i]);
-                    break;
-                case "-numChannels":
-                case "-numMailboxes":
-                case "-nm":
-                    i += 1;
-                    numMailboxes = Integer.parseInt(args[i]);
-                    break;
-                case "-debug":
-                case "-verbose":
-                    debug = true;
-                    break;
-            }
-
-            i += 1;
-        }
+        CliArgumentParser ap = new CliArgumentParser(args);
+        bufferSize = ap.getIntValue(new String[] {"-bb", "-b"}, bufferSize);
+        numProducers = ap.getIntValue(new String[] {"-np", "-p"}, numProducers);
+        numConsumers = ap.getIntValue(new String[] {"-nc", "-c"}, numConsumers);
+        prodCost = ap.getIntValue(new String[] {"-pc", "-x"}, prodCost);
+        consCost = ap.getIntValue(new String[] {"-cc", "-y"}, consCost);
+        numItemsPerProducer = ap.getIntValue(new String[] {"-ipp", "-i"}, numItemsPerProducer);
+        numMailboxes = ap.getIntValue(new String[] {"-numChannels", "-numMailboxes", "-nm"}, numMailboxes);
+        debug = ap.getBoolValue(new String[] {"--debug", "--verbose"}, debug);
     }
 
     protected static void printArgs() {

@@ -33,6 +33,11 @@ public class BenchmarkRunner {
             if (argName.equalsIgnoreCase("-iter")) {
                 iterations = Integer.parseInt(argValue);
             }
+
+            if (argName.equalsIgnoreCase("-workers")) {
+                System.setProperty("actors.corePoolSize", argValue);
+                System.setProperty("actors.maxPoolSize", argValue);
+            }
         }
     }
 
@@ -59,6 +64,7 @@ public class BenchmarkRunner {
         System.out.printf(argOutputFormat, "O/S Version", System.getProperty("os.version"));
         System.out.printf(argOutputFormat, "O/S Name", System.getProperty("os.name"));
         System.out.printf(argOutputFormat, "O/S Arch", System.getProperty("os.arch"));
+        System.out.printf(argOutputFormat, "Num workers", System.getProperty("actors.corePoolSize"));
 
         final List<Double> rawExecTimes = new ArrayList<>(iterations);
 
